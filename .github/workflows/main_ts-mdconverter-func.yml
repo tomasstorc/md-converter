@@ -32,7 +32,11 @@ jobs:
           source venv/bin/activate
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install --upgrade pip
+          python -m pip install --upgrade setuptools
+          pip install --no-cache-dir  --force-reinstall -Iv grpcio==1.56.2
+          pip install -r requirements.txt
         
       # Optional: Add step to run tests here
 
