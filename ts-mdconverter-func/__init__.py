@@ -1,22 +1,26 @@
 import logging
+import markdown2
 
 import azure.functions as func
 
+def convert2html(dtoin):
+    return markdown2.markdown(dtoin)
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
+    
     logging.info('Python HTTP trigger function processed a request.')
-
+    data = req.body.get('data')
     name = req.params.get('name')
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
+    if not data:
+        return func.HttpResponse("No data in body found", status_code=400)
 
-    if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
+    if data:
+        converted = convert2html(data)
+        dToOut = {
+            "data": converted,
+            "status": "success"
+        }
+        return func.HttpResponse(dToOut, mimetype="application/json", status_code=200)
     else:
         return func.HttpResponse(
              "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
