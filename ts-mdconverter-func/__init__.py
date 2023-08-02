@@ -37,9 +37,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 }
                 return func.HttpResponse(json.dumps(dToOut) , mimetype="application/json", status_code=200)
         else:
-            return func.HttpResponse('no daa found')
+            return func.HttpResponse(json.dumps({"status": "error", "data": "no input found"}), status_code=400)
     if len(req.files.values()) == 0:
-        return func.HttpResponse("No content", status_code=400)
+        return func.HttpResponse(json.dumps({"status": "error", "data": "no file found"}), status_code=400)
     else:
         return func.HttpResponse("here")
     
