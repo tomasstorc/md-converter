@@ -9,8 +9,8 @@ def convert2html(dtoin):
 def main(req: func.HttpRequest) -> func.HttpResponse:
     
     logging.info('Python HTTP trigger function processed a request.')
-    data = req.body.get('data')
-    name = req.params.get('name')
+    req_body = req.get_json()
+    data = req_body.get('data')
     if not data:
         return func.HttpResponse("No data in body found", status_code=400)
 
