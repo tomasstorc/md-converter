@@ -1,5 +1,6 @@
 import logging
 import markdown2
+import json
 
 import azure.functions as func
 
@@ -20,4 +21,4 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             "data": converted,
             "status": "success"
         }
-        return func.HttpResponse(dToOut, mimetype="application/json", status_code=200)
+        return func.HttpResponse(json.dumps(dToOut) , mimetype="application/json", status_code=200)
