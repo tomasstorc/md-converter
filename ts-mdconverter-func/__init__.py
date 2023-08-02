@@ -15,14 +15,22 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     if req.files.values():
         for file in req.files.values():
-            dToOut = convert2html(file.stream.read())
+            logging.info(f"received file ${file.filename}")
+            converted_f = convert2html(file.stream.read())
+            dToOut = {
+                "data": converted_f,
+                "status": "success"
+            }
+            logging.info("successfully converted file")
             return func.HttpResponse(json.dumps(dToOut) , mimetype="application/json", status_code=200)
     if req.headers.get('Content-Type') == "application/json":
+        logging.info("received json body")
         req_body = req.get_json()
         if req_body:
             data = req_body.get('data')
             if data:
                 converted = convert2html(data)
+                logging.info("successfully converted json data")
                 dToOut = {
                     "data": converted,
                     "status": "success"
