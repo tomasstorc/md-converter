@@ -4,3 +4,4 @@ grpcio~=1.33.0
 grpcio-tools~=1.33.0
 protobuf
 six
+markdown2
