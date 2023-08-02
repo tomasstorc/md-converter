@@ -3,7 +3,7 @@
   "bindings": [
     {
       "authLevel": "anonymous",
-      "route": "/convert",
+      "route": "convert",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
